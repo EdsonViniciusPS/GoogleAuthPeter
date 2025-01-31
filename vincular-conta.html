@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincular Conta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #5DA760;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #5DA760;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #4a8c4e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Vincular Conta
+    </header>
+    <main>
+        <p>Vincule um método de e-mail e senha à sua conta Google para acessar de outras formas.</p>
+        <form id="vincular-conta-form">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required placeholder="Digite seu e-mail">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" required placeholder="Digite uma senha">
+            </div>
+            <div class="form-group">
+                <button type="submit">Vincular Conta</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        &copy; 2025 Meu Site. Todos os direitos reservados.
+    </footer>
+
+    <script type="module">
+        // Importações do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, linkWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBuZOUfbs1WbCsOFCdV2kuiJnyuP8PLb-g",
+            authDomain: "poopsurprise-74ff9.firebaseapp.com",
+            projectId: "poopsurprise-74ff9",
+            storageBucket: "poopsurprise-74ff9.firebasestorage.app",
+            messagingSenderId: "205912859910",
+            appId: "1:205912859910:web:e041868dfd89a49dfe6a87",
+            measurementId: "G-E0NQXCT4CZ"
+        };
+
+        // Inicializar o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Vincular conta com e-mail e senha
+        document.getElementById('vincular-conta-form').addEventListener('submit', (e) => {
+            e.preventDefault(); // Evitar o recarregamento da página
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            // Criar credencial de e-mail/senha
+            const credential = EmailAuthProvider.credential(email, senha);
+
+            // Vincular a credencial à conta atual
+            linkWithCredential(auth.currentUser, credential)
+                .then((userCredential) => {
+                    console.log('Conta vinculada com sucesso:', userCredential.user);
+                    alert('Conta vinculada com sucesso!');
+                    // Redirecionar o usuário para outra página, se necessário
+                })
+                .catch((error) => {
+                    console.error('Erro ao vincular conta:', error);
+                    alert('Erro ao vincular conta: ' + error.message);
+                });
+        });
+    </script>
+</body>
+</html>
