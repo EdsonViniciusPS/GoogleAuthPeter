@@ -80,20 +80,6 @@
         // Adicionar evento de clique ao botão de login com o Google
         document.getElementById('google-login-button').addEventListener('click', () => {
             signInWithPopup(auth, provider)
-                .then((result) => {
-                    // Login bem-sucedido
-                    const user = result.user;
-                    console.log('Usuário logado:', user);
-                    alert(`Bem-vindo, ${user.displayName}!`);
-                    // Redirecionar ou realizar outras ações após o login
-                })
-                .catch((error) => {
-                    // Tratar erros de login
-                    console.error('Erro ao fazer login:', error);
-                    alert('Erro ao fazer login. Tente novamente.');
-                });
-        });
-        signInWithPopup(auth, provider)
     .then((result) => {
         const user = result.user;
         console.log('Usuário logado:', user);
@@ -106,6 +92,7 @@
         console.error('Erro ao fazer login:', error);
         alert('Erro ao fazer login. Tente novamente.');
     });
+        });
     </script>
 </body>
 </html>
