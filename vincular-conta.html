@@ -115,6 +115,8 @@
                     console.log('Conta vinculada com sucesso:', userCredential.user);
                     alert('Conta vinculada com sucesso!');
                     // Redirecionar o usuário para outra página, se necessário
+                    // Redirecionar para a página de vincular conta
+                     window.location.href = 'boas_vindas.html';
                 })
                 .catch((error) => {
                     console.error('Erro ao vincular conta:', error);
