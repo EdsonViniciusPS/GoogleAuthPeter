@@ -57,7 +57,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-
+    
         // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBuZOUfbs1WbCsOFCdV2kuiJnyuP8PLb-g",
@@ -68,24 +68,32 @@
             appId: "1:205912859910:web:e041868dfd89a49dfe6a87",
             measurementId: "G-E0NQXCT4CZ"
         };
-
+    
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
-
+    
         // Configurar o provedor de autenticação do Google
         const provider = new GoogleAuthProvider();
-
+    
         // Adicionar evento de clique ao botão de login com o Google
         document.getElementById('google-login-button').addEventListener('click', () => {
             signInWithPopup(auth, provider)
                 .then((result) => {
                     // Login bem-sucedido
                     const user = result.user;
+                    const isNewUser = result.additionalUserInfo.isNewUser; // Verifica se é um novo usuário
+    
                     console.log('Usuário logado:', user);
                     alert(`Bem-vindo, ${user.displayName}!`);
-                    // Redirecionar ou realizar outras ações após o login
+    
+                    // Redirecionamento baseado no tipo de usuário
+                    if (isNewUser) {
+                        window.location.href = "vincular-conta.html"; // Cadastro
+                    } else {
+                        window.location.href = "boas_vindas.html"; // Login
+                    }
                 })
                 .catch((error) => {
                     // Tratar erros de login
@@ -94,5 +102,6 @@
                 });
         });
     </script>
+    
 </body>
 </html>
